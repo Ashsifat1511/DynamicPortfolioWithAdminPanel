@@ -332,7 +332,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Placeholder for fetching and displaying data in HTML tables for each section
 $sqlAbout = "SELECT * FROM about_section";
 $resultAbout = $conn->query($sqlAbout);
-displayAboutSectionData($resultAbout, 'About');
+
 
 // Placeholder for fetching and displaying data for other sections (timeline, projects, achievements, skills)...
 
@@ -344,327 +344,32 @@ displayAboutSectionData($resultAbout, 'About');
 <head>
     <meta charset="UTF-8" />
     <title>Admin Panel</title>
-    <style>
-        body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    margin: 20px;
-}
-
-h2 {
-    color: #007bff;
-}
-
-form {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-input,
-textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-}
-
-button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-th {
-    background-color: #007bff;
-    color: #fff;
-}
-
-a {
-    color: #007bff;
-    text-decoration: none;
-    margin-top: 20px;
-    display: inline-block;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-.logout-link {
-    margin-top: 20px;
-    display: inline-block;
-    color: #fff;
-    background-color: #dc3545;
-    padding: 10px 15px;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-}
-
-.logout-link:hover {
-    background-color: #c82333;
-}
-
-
-    </style>
+    <link rel="stylesheet" type="text/css" href="panel.css" />
 </head>
 
 <body>
     <h2>Welcome, Admin!</h2>
-
-    <!-- Example form for adding about section -->
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="add_about">
-        <label for="title">About Title:</label>
-        <input type="text" name="title" required>
-        <label for="content">About Content:</label>
-        <textarea name="content" required></textarea>
-        <!-- Add more input fields as needed -->
-        <button type="submit">Add About Section</button>
-    </form>
-
-    <!-- Example form for updating about section -->
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="update_about">
-        <input type="hidden" name="id" id="update_id">
-        <label for="title">About Title:</label>
-        <input type="text" name="title" id="update_title" required>
-        <label for="content">About Content:</label>
-        <textarea name="content" id="update_content" required></textarea>
-        <!-- Add more input fields as needed -->
-        <button type="submit">Update About Section</button>
-    </form>
-
-    <!-- Example form for deleting about section -->
-
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="delete_about">
-        <input type="hidden" name="id" id="delete_id">
-        <button type="submit">Delete About Section</button>
-    </form>
-
-    <!--Example form for adding timeline section -->
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="add_timeline">
-        <label for="title">Timeline Title:</label>
-        <input type="text" name="title" required>
-        <label for="content">Timeline Content:</label>
-        <textarea name="content" required></textarea>
-        <!-- Add more input fields as needed -->
-        <button type="submit">Add Timeline Section</button>
-    </form>
-
-    <!-- Example form for updating timeline section -->
-
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="update_timeline">
-        <input type="hidden" name="id" id="update_id">
-        <label for="title">Timeline Title:</label>
-        <input type="text" name="title" id="update_title" required>
-        <label for="content">Timeline Content:</label>
-        <textarea name="content" id="update_content" required></textarea>
-        <!-- Add more input fields as needed -->
-        <button type="submit">Update Timeline Section</button>
-    </form>
-
-    <!-- Example form for deleting timeline section -->
-
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="delete_timeline">
-        <input type="hidden" name="id" id="delete_id">
-        <button type="submit">Delete Timeline Section</button>
-    </form>
-
-    <!-- Example form for adding projects section -->
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="add_projects">
-        <label for="title">Projects Title:</label>
-        <input type="text" name="title" required>
-        <label for="content">Projects Content:</label>
-        <textarea name="content" required></textarea>
-        <!-- Add more input fields as needed -->
-        <button type="submit">Add Projects Section</button>
-    </form>
-
-    <!-- Example form for updating projects section -->
-
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="update_projects">
-        <input type="hidden" name="id" id="update_id">
-        <label for="title">Projects Title:</label>
-        <input type="text" name="title" id="update_title" required>
-        <label for="content">Projects Content:</label>
-        <textarea name="content" id="update_content" required></textarea>
-        <!-- Add more input fields as needed -->
-        <button type="submit">Update Projects Section</button>
-    </form>
-
-    <!-- Example form for deleting projects section -->
-
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="delete_projects">
-        <input type="hidden" name="id" id="delete_id">
-        <button type="submit">Delete Projects Section</button>
-    </form>
-
-    <!-- Example form for adding achievements section -->
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="add_achievements">
-        <label for="title">Achievements Title:</label>
-        <input type="text" name="title" required>
-        <label for="content">Achievements Content:</label>
-        <textarea name="content" required></textarea>
-        <!-- Add more input fields as needed -->
-        <button type="submit">Add Achievements Section</button>
-    </form>
-
-    <!-- Example form for updating achievements section -->
-
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="update_achievements">
-        <input type="hidden" name="id" id="update_id">
-        <label for="title">Achievements Title:</label>
-        <input type="text" name="title" id="update_title" required>
-        <label for="content">Achievements Content:</label>
-        <textarea name="content" id="update_content" required></textarea>
-        <!-- Add more input fields as needed -->
-        <button type="submit">Update Achievements Section</button>
-    </form>
-
-    <!-- Example form for deleting achievements section -->
-
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="delete_achievements">
-        <input type="hidden" name="id" id="delete_id">
-        <button type="submit">Delete Achievements Section</button>
-    </form>
-
-    <!-- Example form for adding skills section -->
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="add_skills">
-        <label for="title">Skills Title:</label>
-        <input type="text" name="title" required>
-        <label for="content">Skills Content:</label>
-        <textarea name="content" required></textarea>
-        <!-- Add more input fields as needed -->
-        <button type="submit">Add Skills Section</button>
-    </form>
-
-    <!-- Example form for updating skills section -->
-
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="update_skills">
-        <input type="hidden" name="id" id="update_id">
-        <label for="title">Skills Title:</label>
-        <input type="text" name="title" id="update_title" required>
-        <label for="content">Skills Content:</label>
-        <textarea name="content" id="update_content" required></textarea>
-        <!-- Add more input fields as needed -->
-        <button type="submit">Update Skills Section</button>
-    </form>
-
-    <!-- Example form for deleting skills section -->
-
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="delete_skills">
-        <input type="hidden" name="id" id="delete_id">
-        <button type="submit">Delete Skills Section</button>
-    </form>
-
-    <!-- Example form for adding contact section -->
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="add_contact">
-        <label for="name">Contact Name:</label>
-        <input type="text" name="name" required>
-        <label for="email">Contact Email:</label>
-        <input type="email" name="email" required>
-        <label for="message">Contact Message:</label>
-        <textarea name="message" required></textarea>
-        <!-- Add more input fields as needed -->
-        <button type="submit">Add Contact Section</button>
-    </form>
-
-    <!-- Example form for updating contact section -->
-
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="update_contact">
-        <input type="hidden" name="id" id="update_id">
-        <label for="name">Contact Name:</label>
-        <input type="text" name="name" id="update_name" required>
-        <label for="email">Contact Email:</label>
-        <input type="email" name="email" id="update_email" required>
-        <label for="message">Contact Message:</label>
-        <textarea name="message" id="update_message" required></textarea>
-        <!-- Add more input fields as needed -->
-        <button type="submit">Update Contact Section</button>
-    </form>
-
-    <!-- Example form for deleting contact section -->
-
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="delete_contact">
-        <input type="hidden" name="id" id="delete_id">
-        <button type="submit">Delete Contact Section</button>
-    </form>
-
-    <!-- Example form for adding messages section -->
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="add_messages">
-        <label for="name">Messages Name:</label>
-        <input type="text" name="name" required>
-        <label for="email">Messages Email:</label>
-        <input type="email" name="email" required>
-        <label for="message">Messages Message:</label>
-        <textarea name="message" required></textarea>
-        <!-- Add more input fields as needed -->
-        <button type="submit">Add Messages Section</button>
-    </form>
-
-    <!-- Example form for updating messages section -->
-
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="update_messages">
-        <input type="hidden" name="id" id="update_id">
-        <label for="name">Messages Name:</label>
-        <input type="text" name="name" id="update_name" required>
-        <label for="email">Messages Email:</label>
-        <input type="email" name="email" id="update_email" required>
-        <label for="message">Messages Message:</label>
-        <textarea name="message" id="update_message" required></textarea>
-        <!-- Add more input fields as needed -->
-        <button type="submit">Update Messages Section</button>
-    </form>
-
-    <!-- Example form for deleting messages section -->
-
-    <form action="#" method="post">
-        <input type="hidden" name="action" value="delete_messages">
-        <input type="hidden" name="id" id="delete_id">
-        <button type="submit">Delete Messages Section</button>
-    </form>
+    
+    <?php 
+        $sqlAbout = "SELECT * FROM about_section";
+        $resultAbout = $conn->query($sqlAbout);
+        displayAboutSectionData($resultAbout, 'About');
+        $sqlTimeline = "SELECT * FROM timeline_section";
+        $resultTimeline = $conn->query($sqlTimeline);
+        displayTimelineSectionData($resultTimeline, 'Timeline');
+        $sqlProjects = "SELECT * FROM projects_section";
+        $resultProjects = $conn->query($sqlProjects);
+        displayProjectsSectionData($resultProjects, 'Projects');
+        $sqlAchievements = "SELECT * FROM achievements_section";
+        $resultAchievements = $conn->query($sqlAchievements);
+        displayAchievementsSectionData($resultAchievements, 'Achievements');
+        $sqlSkills = "SELECT * FROM skills_section";
+        $resultSkills = $conn->query($sqlSkills);
+        displaySkillsSectionData($resultSkills, 'Skills');
+        $sqlMessages = "SELECT * FROM messages";
+        $resultMessages = $conn->query($sqlMessages);
+        displayMessagesSectionData($resultMessages, 'Messages');
+    ?>
     <a href="logout.php">Logout</a>
     <script src="script.js"></script>
 </body>
